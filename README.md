@@ -1,1 +1,8 @@
 # twitch
+
+
+
+py -m venv env
+source env/bin/activate
+
+pip install 
