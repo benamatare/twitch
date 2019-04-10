@@ -7,10 +7,10 @@ from .services import data_fetch
 logger  = get_task_logger(__name__)
 
 @periodic_task(
-    run_every = (crontab(minute=0, hour=0)),
-    name = 'update_data_with_data_fetch',
+    run_every = (crontab(minute='*/60')),
+    name = 'get_data_from_twitch_api',
     ignore_result = True
 )
-def update_data_with_data_fetch():
+def get_data_from_twitch_api():
     data_fetch()
-    logger.info('Data fetch hit')
+    logger.info('LOGGED')
