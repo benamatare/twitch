@@ -1,0 +1,22 @@
+.graph-parent {
+    /* border: 2.5px solid red; */
+
+
+    /* height: 90vh; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* width: 100%; */
+    /* heigth: 100%; */
+}
+
+.graph-child-header {
+    /* border: 1px solid yellow; */
+    background-color: #4b367c;
+    text-align: center;
+    color: #dad8de;
+    font-size: 1.2em;
+}
+
+
