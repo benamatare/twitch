@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../css/loading/loading.css';
+import '../css/loading.css'
 
 const Spinner = require('react-spinkit');
 

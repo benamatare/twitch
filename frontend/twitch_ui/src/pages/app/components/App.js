@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import '../src/css/master/app.css'
 
-import Graph from './components/graph/graph';
-import Loading from './components/loading/loading';
+import '../css/app.css'
 
+import Loading from '../../loading/components/loading';
+
+import Graph from '../../graph/components/graph';
 export default class App extends Component {
   state = {
     currentDay: new Date().getDay(),
@@ -71,7 +72,7 @@ export default class App extends Component {
             viewCounts:  this.getTimeValues(res[1]),
           }
         })
-      }, 10);
+      }, 4000);
     })
   };
 
