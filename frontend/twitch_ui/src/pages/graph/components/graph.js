@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../css/graph/graph.css';
+import '../css/graph.css'
 import { Line } from 'react-chartjs-2'
 
 export default class Graph extends Component {
