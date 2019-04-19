@@ -1,9 +1,21 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cca4b461057685f2bea78e82cab4905048c5ba46
 .content {
     background: #f3f4f4;
     height: 100vh;
 }
 
 .page__content {
+<<<<<<< HEAD
+=======
+.app-parent {
+    /* border: 5px solid green; */
+    height: 100%;
+>>>>>>> 530facd989e4bbd134a653491e282fbeaaa6f143
+=======
+>>>>>>> cca4b461057685f2bea78e82cab4905048c5ba46
     display: flex;
 
     flex-direction: column;

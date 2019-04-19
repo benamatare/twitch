@@ -41,6 +41,7 @@
 }
 
 .sk-wave {
+  /* height: 12vh !important; */
   height: 15vh !important;
   color: #6441a4 !important;
 }
