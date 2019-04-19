@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  className="loading-screen-parent"
+>
+  <Spinner
+    fadeIn="full"
+    name="wave"
+    noFadeIn={false}
+    overrideSpinnerClassName=""
+  />
+</div>
+`;
