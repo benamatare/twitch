@@ -88,8 +88,8 @@ export default class App extends Component {
 
   render() {
     return ( 
-      <div className="app-parent">
-        {/* <Loading /> */}
+      <div className="content page__content">
+        <Loading />
         {this.state.loading ? this.renderGraph() : <Loading/>}
       </div>
     )};

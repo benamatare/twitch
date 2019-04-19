@@ -6,7 +6,7 @@ const Spinner = require('react-spinkit');
 export default class Loading extends Component {
   render() {
     return (
-      <div className='loading-screen-parent'>
+      <div className='load'>
           <Spinner name='wave' />
       </div>
     )
