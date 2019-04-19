@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import '../css/loading.css'
 
@@ -12,3 +13,5 @@ export default class Loading extends Component {
     )
   }
 }
+
+export default Loading;
