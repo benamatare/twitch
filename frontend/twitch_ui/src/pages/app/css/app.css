@@ -1,14 +1,12 @@
-.app-parent {
-    /* border: 5px solid green; */
-    height: 100%;
+.content {
+    background: #f3f4f4;
+    height: 100vh;
+}
+
+.page__content {
     display: flex;
+
     flex-direction: column;
-    
     justify-content: center;
     align-items: center;
 }
-
-.app-parent && .graph-parent {
-    /* height: 50%; */
-        border: 2px dashed yellow;
-    }
