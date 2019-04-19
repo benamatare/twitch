@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @keyframes fadein {
   from {
     opacity: 0;
@@ -43,5 +44,9 @@
 .sk-wave {
   /* height: 12vh !important; */
   height: 15vh !important;
+=======
+.sk-wave {
+  height: 22vh !important;
+>>>>>>> 530facd989e4bbd134a653491e282fbeaaa6f143
   color: #6441a4 !important;
 }

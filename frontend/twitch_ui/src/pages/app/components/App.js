@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-
+// CSS Style Import
 import '../css/app.css'
-
+// Sub Components Import
 import Loading from '../../loading/components/loading';
-
 import Graph from '../../graph/components/graph';
+// Service Functions Import
+import {fetchGameInfo, localizeTimeString, formatViews} from '../services/app.services';
+
 export default class App extends Component {
+  // Current state of the app, is that we have to get data by the day and month,
+  // not the greatest solution, need to change the endpoints to just give the data we need for the frontend
+  // So moving forward the STATE needs to be dumber and the backend needs to be smarter, and more precise endpoints
+  
+  // Hard code the game that we want to pull as well :-( 
+  
   state = {
-    currentDay: new Date().getDay(),
-    currentMonth: new Date().getMonth(),
-    // currentDay: 3,
-    // currentMonth: 3,
+    // currentDay: new Date().getDay(),
+    // currentMonth: new Date().getMonth(),
+    currentDay: 3,
+    currentMonth: 3,
     loading: false,
     gameName: null,
     gameID: 3,
@@ -20,64 +28,35 @@ export default class App extends Component {
     }
   };
   
-  getGameData = () => {
-    // Get a Game MetaData
-    return fetch(`http://localhost:8000/api/game/${this.state.gameID}`).then(res => res.json())
-  };
-  
-  getGameLogs = () => {
-    // Get the Logs for a Game; (seperate endpoint)
-    return fetch(`http://localhost:8000/api/game/${this.state.gameID}/logs`).then(res => res.json())
-      .then(json => { return json.filter(gameTimeLog => {
-        // Filter out the gameTimeLogs that do NOT match the current Month & Day
-        return new Date(gameTimeLog.logged_at).getMonth() === this.state.currentMonth && new Date(gameTimeLog.logged_at).getDay() === this.state.currentDay
-      })
-    })
-  };
-  
-  waitForFetchCallsToResolve = () => {
-    return Promise.all([ 
-      this.getGameData(), 
-      this.getGameLogs() 
-    ])
-  };
-
-
-  getTimeStamps = gameTimeLogs => {
-    const options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12 : true,
-    };
-      return gameTimeLogs.map(timeLog =>  {
-        return new Date(timeLog.logged_at).toLocaleDateString('en-us', options).slice(10,20).trim().toLowerCase()
-    })
-  };
   
   getTimeValues = gameTimeLogs => {
+    // Format the time values, for the graph component
     return gameTimeLogs.map(timeLog => {
       return timeLog.views
     })
   };
 
   componentDidMount(){
-    this.waitForFetchCallsToResolve().then(res => {
-      setTimeout(() => {
-        this.setState({
-          loading: !this.state.loading,
-          gameID: res[0].id,
-          gameName: res[0].name,
-          gameLogs: {
-            timeStamps: this.getTimeStamps(res[1]),
-            viewCounts:  this.getTimeValues(res[1]),
-          }
-        })
-      }, 4000);
-    })
+    // Get the data from our API, set time to make the loads take a little longer - for testing the UI/UX of the loading
+    // Will remove once we get hosted 
+    fetchGameInfo(this.state.gameID,this.state.currentDay, this.state.currentMonth).then( res => {
+    setTimeout(() => {
+      this.setState({
+        loading: !this.state.loading,
+        gameID: res[0].id,
+        gameName: res[0].name,
+        gameLogs: {
+          timeStamps: localizeTimeString(res[1]),
+          viewCounts:  formatViews(res[1]),
+        }
+      })
+    }, 3000);
+   })
+
   };
 
   renderGraph = () => {
-    // Move rendering return to a function to simplify Component render page
+    // Just renders the graph component, pass in the data that we need as well
     return (
       <div className='graph-parent'>
           <Graph dataset={this.state.gameLogs} name={this.state.gameName}/>
@@ -85,8 +64,8 @@ export default class App extends Component {
       </div>
   )};
 
-
   render() {
+    console.log(this.state)
     return ( 
       <div className="content page__content">
         <Loading />

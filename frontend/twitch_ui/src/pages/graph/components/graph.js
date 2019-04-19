@@ -1,76 +1,71 @@
-import React, { Component } from 'react';
-import '../css/graph.css'
-import { Line } from 'react-chartjs-2'
+import React from "react";
+// CSS Style Import
+import "../css/graph.css";
+// ChartJS Import
+import { Line } from "react-chartjs-2";
 
-export default class Graph extends Component {
-
-  formatViewCounts = views => {
-    return views.map(viewCount => {
-      return viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    })
+const formatChartData = data => {
+  return {
+    labels: data.dataset.timeStamps,
+    datasets: [
+      {
+        label: data.name,
+        data: data.dataset.viewCounts,
+        backgroundColor: "#b19dd81f",
+        borderColor: "#4b367c",
+        pointBorderColor: "#4b367c1c",
+        pointBorderWidth: 0.5,
+        pointHoverBackgroundColor: "#FFFFFF",
+        pointHoverBorderColor: "rgb(199,196,208)",
+        pointHoverBorderWidth: 0.2,
+        pointHoverRadius: 3.5
+      }
+    ]
   };
+};
 
-  formatChartData = () => {
-    return {
-      labels: this.props.dataset.timeStamps,
-      datasets : [{
-          label: this.props.name,
-          data: this.props.dataset.viewCounts,
-          
-          backgroundColor: '#b19dd81f',
-          borderColor: '#4b367c',
-
-          pointBorderColor: '#4b367c1c',
-          pointBorderWidth: 0.5,
-
-          pointHoverBackgroundColor: '#FFFFFF',
-          pointHoverBorderColor: 'rgb(199,196,208)',
-          pointHoverBorderWidth: 0.2,
-          pointHoverRadius: 3.5,
-      }]
-    }
-  };
-  
-  render() {
-    console.log(this.props.dataset.viewCounts)
-    return (
-      <Line 
-        data={this.formatChartData()} 
-        options={{
-          label: {
-            xAxisID: '',
+const Graph = props => {
+  return (
+    <Line
+      data={formatChartData(props)}
+      options={{
+        label: {
+          xAxisID: ""
+        },
+        elements: {
+          point: {
+            // pointStyle: 'cirlce',
+            // pointRadius: 1,
+            pointBackgroundColor: "red",
+            pointBorderColor: "yellow"
+            // pointBorderWidth: 5,
           },
-          elements: {
-            point: {
-              // pointStyle: 'cirlce',
-              // pointRadius: 1,
-              pointBackgroundColor: 'red',
-              pointBorderColor: 'yellow',
-              // pointBorderWidth: 5,
-            },
-            line: {
+          line: {
             //   tension: 0.2,
             //   borderWidth: 0.5,
             //   backgroundColor: '#4b367c',
-                borderColor: '#4b367c',
-            }
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              }
-            }]
-          },
-          // maintainAspectRatio: false, 
-          legend: { 
-            display: false
-          },
-          tooltips: {
-            // enabled: false
+            borderColor: "#4b367c"
           }
-        }}
-      />
-    )};
-
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        },
+        // maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        tooltips: {
+          // enabled: false
+        }
+      }}
+    />
+  );
 };
+
+export default Graph;
