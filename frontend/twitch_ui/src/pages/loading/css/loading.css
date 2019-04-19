@@ -1,13 +1,4 @@
-.sk-spinner {
-  height: 100%;
-
-  display: flex;
-  flex-direction: row;
-
-  justify-content: center;
-  align-items: center;
+.sk-wave {
+  height: 22vh !important;
+  color: #6441a4 !important;
 }
-  .sk-wave {
-    height: 12vh !important; 
-    color: #6441a4 !important;
-  }

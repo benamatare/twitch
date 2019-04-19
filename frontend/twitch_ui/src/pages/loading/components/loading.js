@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import '../css/loading.css'
+import React from "react";
 
-const Spinner = require('react-spinkit');
+import "../css/loading.css";
 
-export default class Loading extends Component {
-  render() {
-    return (
-      <div className='loading-screen-parent'>
-          <Spinner name='wave' />
-      </div>
-    )
-  }
-}
+const Spinner = require("react-spinkit");
+
+const Loading = () => {
+  return (
+    <div className="block__loading">
+      <Spinner name="wave" />
+    </div>
+  );
+};
+
+export default Loading;
