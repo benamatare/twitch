@@ -29,21 +29,17 @@ const fetchGameInfo = (gameID, month, day) => {
 };
 
 const localizeTimeString = timeLog => {
-  const OPTIONS = { hour: "numeric", minute: "numeric", hour12: true };
+  const OPTIONS = { hour: "2-digit", minute: "2-digit" };
   return timeLog.map(log => {
-    return new Date(log.logged_at)
-      .toLocaleDateString("en-us", OPTIONS)
-      .slice(10, 20)
-      .trim()
-      .toLowerCase();
+    return new Date(log.logged_at).toLocaleTimeString("en-US", OPTIONS);
   });
 };
 
 const formatViews = timeLog => {
   return timeLog.map(log => {
-    return log.views
-  })
-}
+    return log.views;
+  });
+};
 
 module.exports = {
   fetchGameInfo: fetchGameInfo,
