@@ -58,9 +58,11 @@ export default class App extends Component {
   renderGraph = () => {
     // Just renders the graph component, pass in the data that we need as well
     return (
-      <div className='graph-parent'>
+      <div className="graph">
+        <div className="graph__item">
           <Graph dataset={this.state.gameLogs} name={this.state.gameName}/>
-        <h1 className="graph-child-header">  lots of people watching {this.state.gameName.toLowerCase()} </h1>
+        </div>
+          <span className="graph__title">{this.state.gameName.toLowerCase()} views for {this.state.currentMonth}/{this.state.currentDay}/19</span>
       </div>
   )};
 
@@ -68,7 +70,7 @@ export default class App extends Component {
     console.log(this.state)
     return ( 
       <div className="content page__content">
-        <Loading />
+        {/* <Loading /> */}
         {this.state.loading ? this.renderGraph() : <Loading/>}
       </div>
     )};
