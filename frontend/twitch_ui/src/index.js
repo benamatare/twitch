@@ -1,12 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from '../src/pages/app/components/App'
-import './index.css'
+import App from "../src/pages/app/components/App";
+import "./index.css";
 
+console.log("REACT VERSION:", React.version);
 
-console.log('REACT VERSION:',React.version)
-
-ReactDOM.render( <App />, 
-    document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));

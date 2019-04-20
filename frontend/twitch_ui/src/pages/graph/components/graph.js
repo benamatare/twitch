@@ -1,71 +1,132 @@
-import React from "react";
-// CSS Style Import
-import "../css/graph.css";
-// ChartJS Import
-import { Line } from "react-chartjs-2";
+import React, { PureComponent } from "react";
+import Chart from "chart.js";
+let myLineChart;
 
-const formatChartData = data => {
-  return {
-    labels: data.dataset.timeStamps,
-    datasets: [
-      {
-        label: data.name,
-        data: data.dataset.viewCounts,
-        backgroundColor: "#b19dd81f",
-        borderColor: "#4b367c",
-        pointBorderColor: "#4b367c1c",
-        pointBorderWidth: 0.5,
-        pointHoverBackgroundColor: "#FFFFFF",
-        pointHoverBorderColor: "rgb(199,196,208)",
-        pointHoverBorderWidth: 0.2,
-        pointHoverRadius: 3.5
-      }
-    ]
-  };
-};
+//--Chart Style Options--//
+Chart.defaults.global.defaultFontFamily = "'Roboto', sans-serif";
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.elements.point.radius = 2
+Chart.defaults.global.elements.point.backgroundColor = 'red'
 
-const Graph = props => {
-  return (
-    <Line
-      data={formatChartData(props)}
-      options={{
-        label: {
-          xAxisID: ""
-        },
-        elements: {
-          point: {
-            // pointStyle: 'cirlce',
-            // pointRadius: 1,
-            pointBackgroundColor: "red",
-            pointBorderColor: "yellow"
-            // pointBorderWidth: 5,
-          },
-          line: {
-            //   tension: 0.2,
-            //   borderWidth: 0.5,
-            //   backgroundColor: '#4b367c',
-            borderColor: "#4b367c"
+export default class LineGraph extends PureComponent {
+  chartRef = React.createRef();
+
+  componentDidMount() {
+    this.buildChart();
+  }
+
+  componentDidUpdate() {
+    this.buildChart();
+  }
+
+  buildChart = () => {
+    const myChartRef = this.chartRef.current.getContext("2d");
+    const { labels, data, name } = this.props;
+    const { height: graphHeight } = myChartRef.canvas;
+
+    // Gradient Styling for the tick marks
+    let gradientTicks = myChartRef.createLinearGradient(0, 500, 0, graphHeight);
+    gradientTicks.addColorStop(0, "rgba(25, 25, 25, 0.1)");
+    gradientTicks.addColorStop(1, "rgba(25, 25, 25, 0.5)");
+
+    // Gradient Styling for the line chart itself
+    let gradientLine = myChartRef.createLinearGradient(0, 500, 0, graphHeight);
+    gradientLine.addColorStop(0, "rgba(94,60,159,0.23)");
+    gradientLine.addColorStop(0.2, "rgba(100,65,165,0.23)");
+    gradientLine.addColorStop(0.5, "rgba(106,70,171,0.23)");
+    gradientLine.addColorStop(1, "rgba(117,80,182,0.23)");
+
+    if (typeof myLineChart !== "undefined") myLineChart.destroy();
+
+    myLineChart = new Chart(myChartRef, {
+      type: "line",
+      data: {
+        labels:
+          labels.length === data.length
+            ? labels
+            : new Array(data.length).fill("Data"),
+        datasets: [
+          {
+            label: name,
+            data: data,
+            fill: true,
+            borderColor: gradientLine,
+            backgroundColor: gradientLine
           }
-        },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
+          xAxes: [
+            {
+              ticks: {
+                display: true,
+                defaultFontFamily: "'Roboto', sans-serif",
+                fontSize: 11
+              },
+              gridLines: {
+                color: gradientTicks,
+                drawBorder: false
+              }
+            }
+          ],
           yAxes: [
             {
               ticks: {
-                beginAtZero: true
+                display: true,
+                defaultFontFamily: "'Roboto', sans-serif",
+                fontSize: 10,
+                padding: 5,
+                callback: function(value, index, values) {
+                  if (value >= 1000000000) {
+                    return (
+                      (value / 1000000000).toFixed(1).replace(/\.0$/, "") + "G"
+                    );
+                  }
+                  if (value >= 1000000) {
+                    return (
+                      (value / 1000000).toFixed(1).replace(/\.0$/, "") + "M"
+                    );
+                  }
+                  if (value >= 1000) {
+                    return (value / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+                  }
+                  return value;
+                }
+              },
+              gridLines: {
+                drawTicks: false,
+                color: gradientTicks,
+                drawBorder: false,
+                offsetGridLines: true
               }
             }
           ]
         },
-        // maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
         tooltips: {
-          // enabled: false
+          backgroundColor: "#232127",
+          borderColor: "hsla(0, 0%, 100%, 0.05)",
+          displayColors: false,
+          borderWidth: 1,
+          xPadding: 10,
+          yPadding: 10,
+          titleFontSize: 14,
+          titleFontFamily: "'Roboto', sans-serif'",
+          bodyFontSize: 12,
+          bodyFontFamily: "'Roboto', sans-serif'",
+          callbacks: {
+            label: (tooltipItem, data) => {
+              return `${parseInt(tooltipItem.value).toLocaleString()} views`;
+            }
+          }
         }
-      }}
-    />
-  );
-};
+      }
+    });
+  };
 
-export default Graph;
+  render() {
+    return <canvas id="myChart" ref={this.chartRef} />;
+  }
+}
