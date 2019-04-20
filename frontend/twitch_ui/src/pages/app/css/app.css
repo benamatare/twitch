@@ -1,12 +1,95 @@
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadein {
+
+    /* Mozilla */
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein {
+
+    /* Safari & Chrome */
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadein {
+
+    /* Opera */
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 .content {
-    background: #f3f4f4;
-    height: 100vh;
+    /* background: #f3f4f4; */
+    background: rgb(15, 13, 17);
+    /* background: #737373; */
+    /* height: 100%; */
+    height: 100%;
 }
 
 .page__content {
     display: flex;
 
-    flex-direction: column;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+
+    animation: fadein 4s;
+    -webkit-animation: 4s;
+    -moz-animation: 4s;
+
+}
+
+.graph {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.graph__item {
+    height: 88%;
+    width: 90%;
+}
+
+.graph__title {
+    color: rgb(163, 146, 197);
+    text-align: center;
+}
+
+.graph__title,
+h2 {
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
